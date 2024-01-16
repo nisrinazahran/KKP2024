@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bree+Serif&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- font poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Link jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    
+    <title>Homepage</title>
+
+    <!-- style css -->
+    <style>
+        *{
+            font-family: 'Lobster', cursive;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .bg{
+            background-image: url(/static/desa.jpg);
+            background-position:center; 
+            background-repeat: no-repeat;
+            background-size: auto !important;
+        }
+
+        .container{
+            width: 700px;
+            box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1);
+            margin-top: 210px;
+            padding: 25px;
+            border-radius: 20px;;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-primary{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 25px;
+            width: 120px;
+            text-align: center;
+            
+            background-color: rgb(221, 129, 9) !important;
+            border: none !important;
+            border-radius: 10px !important;
+        }
+
+        .btn-primary:focus{
+            box-shadow: none !important;
+            outline: 2px rgb(202, 162, 109) solid !important;
+        }
+
+        .btn-outline-info{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 25px;
+            width: 120px;
+            text-align: center;
+
+            background-color: rgb(202, 162, 109) !important;
+            border: none !important;
+            border-radius: 10px !important;
+            color: #FFF;
+        }
+
+        .btn-outline-info:focus{
+            box-shadow: none !important;
+        }
+
+        .row h1{
+            font-style: normal;
+            font-weight: 800;
+            font-size: 55px;
+            line-height: 50px;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        .modal-body h1{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 25px;
+            line-height: 50px;
+            text-align: center;
+            color: #000000;
+        }
+
+        .row a{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 21px;
+            text-align: center;
+        }
+
+        .btn-icon{
+            border: none !important;
+            border-radius: 10px !important;
+            color: #FFF;
+        }
+
+        .btn-icon i{
+            margin-right: 20px;
+        }
+
+        .header:hover{
+            color: #000000;
+        }
+    </style>
+
+
+</head>
+<body class="bg d-flex h-100 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="display-4 fw-medium header">Selamat Datang di Digital Sensus</h1>
+            </div>
+        <div>
+            <!-- modal login -->
+                <div class="modal fade" id="modalLogin" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-10 offset-1 mt-4">
+                                    <h1>Login Sebagai</h1>
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="bi bi-x-circle" data-bs-dismiss="modal" style="border: none;"></button>
+                                </div>
+                                <div class="button mt-4 ">
+                                    <div class="row">
+                                        <div class="btn-icon col-md-4 offset-2">
+                                            <a type="button" class="btn btn-primary mr-2  " href="/login/admin">
+                                                <i class="bi bi-person-workspace"></i>
+                                                <span>Admin</span>
+                                            </a>
+                                        </div>
+                                        <div class="btn-icon col-md-4">
+                                            <a type="button" class="btn btn-outline-info " href="/login/user">
+                                                <i class="bi bi-people"></i>
+                                                <span>User</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end modal login -->
+
+            <!-- button -->
+            <div class="clik mt-4">
+                <div class="row justify-content-center">
+                    <div class="col-md">
+                        <button class="btn btn-primary" data-bs-target="#modalLogin" data-bs-toggle="modal">Login</button>
+                    </div>
+                </div>
+            </div>
+            <!-- end button -->
+        </div>
+    </div>
+</body>
+</html>

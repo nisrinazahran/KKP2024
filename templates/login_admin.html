@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bree+Serif&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- link bulma -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+
+    <!-- font poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Link jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    
+    <title>Login Admin</title>
+
+    <style>
+        *{
+            font-family: 'Lobster', cursive;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login{
+            height: 100vh;
+        }
+
+        .header h1{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 30px;
+            line-height: 48px;
+            color: #000000;
+        }
+
+        .header p{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+            color: #737373;
+            margin-bottom: 20px;
+        }
+
+        .header-signup h1{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 30px;
+            line-height: 48px;
+            color: #000000;
+        }
+
+        .header-signup p{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+            color: #737373;
+            margin-bottom: 20px;
+        }
+
+        .sign-in-or-up-form label{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #000000;
+            margin-top: 20px;
+        }
+
+        .sign-in-or-up-form input{
+            background: #ffffff;
+            border: 1px solid #BCBCBC;
+            box-sizing: border-box;
+            border-radius: 8px;
+        }
+
+        .sign-in-or-up-form .signin{
+            width: 100%;
+            height: 42px;
+            background: #000000;
+            border-radius: 8px;
+            color: #fff;
+            margin: 0 0 20px 0;
+            border: none;
+        }
+
+        .sign-in-or-up-form .signup{
+            width: 100%;
+            height: 42px;
+            background: #000000;
+            border-radius: 8px;
+            color: #fff;
+            margin: 0 0 20px 0;
+            border: none;
+        }
+
+        .sign-in-or-up-form span{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+            color: #737373;
+        }
+
+        .sign-in-or-up-form span a{
+            font-weight: 600;
+            color: #737373;
+        }
+
+        .login-right h5{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 32px;
+            line-height: 48px;
+            text-align: center;
+            color: #FFFFFF;
+            text-shadow: 0px 3px 5px rgb(0, 0, 0, 0.15);
+        }
+    </style>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function sign_in() {
+            let id = $("#id").val();
+            let password = $("#input-password").val();
+
+            if (id === "" || password === "") {
+                swal("Oops!", "Id dan Password Harus diIsi!", "warning");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/login/admin",
+                data: {
+                    id_give: id,
+                    pw_give: password,
+                },
+                success: function (response) {
+                    if (response["result"] === "success") {
+                    $.cookie("admintoken", response["token"], {path: "/" });
+                    window.location.replace("/admin");
+                    } else {
+                        swal("Oops!",response["msg"],"error");
+                    }
+                },
+                });
+        }
+
+    </script>
+    
+</head>
+<body>
+    <section class="login d-flex">
+        <!-- tampilan sisi kiri -->
+        <div class="login-left w-50 h-100">
+            <a type="button" class="btn-close p-5 ml-3" id="keluar" href="/" aria-label="Close" style="position: fixed;"></a>
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-md-6">
+                    <div class="sign-in-or-up-form">
+                        <div id="title" class="header">
+                            <h1>Halo, Admin</h1>
+                            <p>Selamat Datang di Desa Kami | Silahkan Login</p>
+                        </div>
+                        <div class="mb-3">
+                          <label for="id" class="form-label">Id</label>
+                          <input type="text" class="form-control" id="id" placeholder="Masukkan id anda">
+                        </div>
+                        <div class="mb-3">
+                          <label for="password" class="form-label">Password</label>
+                          <input type="password" class="form-control" id="input-password" placeholder="Masukkan password anda">
+                        </div>
+                        <div id="button">
+                            <button onclick="sign_in()" type="submit" class="signin btn btn-primary" id="liveAlertBtn">Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- tampilan sisi kanan -->
+        <div class="login-right w-50 h-100">
+            <div id="carouselExampleFade" class="carousel slide carousel-fade">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="/static/desa1.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Pegunungan Desa</h5>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <img src="/static/desa2.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Pemukiman desa</h5>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <img src="/static/desa3.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Hutan Desa</h5>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </div>
+    </section>
+</body>
+</html>

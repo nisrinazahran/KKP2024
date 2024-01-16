@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Link bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bree+Serif&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- link bulma -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+
+    <!-- font poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Link jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    
+    <title>Login User</title>
+
+    <style>
+        *{
+            font-family: 'Lobster', cursive;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login{
+            height: 100vh;
+        }
+
+        .header h1{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 30px;
+            line-height: 48px;
+            color: #000000;
+            margin-top: 10px;
+        }
+
+        .header p{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+            color: #737373;
+            margin-bottom: 20px;
+        }
+
+        .login-form label{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #000000;
+            margin-top: 20px;
+        }
+
+        .login-form input{
+            background: #ffffff;
+            border: 1px solid #BCBCBC;
+            box-sizing: border-box;
+            border-radius: 8px;
+        }
+
+        .login-form .signin{
+            width: 100%;
+            height: 42px;
+            background: #000000;
+            border-radius: 8px;
+            color: #fff;
+            margin: 0 0 20px 0;
+            border: none;
+        }
+
+        .login-form .signup{
+            width: 100%;
+            height: 42px;
+            background: #000000;
+            border-radius: 8px;
+            color: #fff;
+            margin: 0 0 20px 0;
+            border: none;
+        }
+
+        .login-form .cancel{
+            width: 100%;
+            height: 42px;
+            border-radius: 8px;
+            margin: 0 0 20px 0;
+        }
+
+
+        .login-form span{
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 21px;
+            color: #737373;
+        }
+
+        .login-form span a{
+            font-weight: 600;
+            color: #737373;
+        }
+
+        .login-right {
+            position: relative;
+            display: block;
+            background-image: url("/static/desa3.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            align-items: center;
+        }
+
+
+    </style>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function sign_in() {
+            let username = $("#username").val();
+            let password = $("#input-password").val();
+
+            if (username === "" || password === "") {
+                swal("Oops!", "Username dan Password Harus diIsi!", "warning");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/login/user",
+                data: {
+                    username_give: username,
+                    pw_give: password,
+                },
+                success: function (response) {
+                    if (response["result"] === "success") {
+                    $.cookie("mytoken", response["token"], { path: "/" });
+                    window.location.replace("/user");
+                    } else {
+                    swal("Oops!",response["msg"],"error");
+                    }
+                },
+                });
+        }
+        
+        function sign_up() {
+            let longname = $("#input-longname").val();
+            let nik = $("#input-nik").val();
+            let namalengkap = $("#namalengkap").val();
+            let alamat = $("#alamat").val();
+            let username = $("#username").val();
+            let password = $("#input-password").val();
+            let password2 = $("#input-password2").val();
+            $.ajax({
+                type: "POST",
+                url: "/register/user",
+                data: {
+                    longname_give:longname,
+                    nik_give:nik,
+                    namalengkap_give:namalengkap,
+                    alamat_give:alamat,
+                    username_give: username,
+                    pw_give: password,
+                },
+                success: function (response) {
+                    alert("Your are signed up! Nice!");
+                    window.location.replace("/login/user");
+                },
+                });
+        }
+
+        function toggle_signup() {
+            $("#re-pw").toggleClass("is-hidden")
+            $("#button").toggleClass("is-hidden")
+            $("#signup").toggleClass("is-hidden")
+            $("#title").toggleClass("is-hidden")
+        }
+    </script>
+</head>
+<body>
+    <section class="login d-flex">
+        <!-- tampilan sisi kiri -->
+        <div class="login-left w-50 h-100">
+            <a type="button" class="btn-close p-5 ml-3" id="keluar" href="/" aria-label="Close" style="position: fixed;"></a>
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-md-6">
+                    <div class="login-form">
+                            <div id="title" class="header">
+                                <h1>Hello, User</h1>
+                                <p>Selamat Datang di Desa Kami | Silahkan Login</p>
+                            </div>
+                            <div id="signup" class="is-hidden">
+                                <div class="header">
+                                    <h1>Halo, User</h1>
+                                    <p>Selamat Datang di Desa Kami | Silahkan Daftar</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="longname" class="form-label">Nama Lengkap</label>
+                                    <input type="text" class="form-control" id="input-longname" placeholder="Masukan nama lengkap anda">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nik" class="form-label">NIK</label>
+                                    <input type="text" class="form-control" id="input-nik" placeholder="Masukkan NIK anda">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id" class="form-label">Alamat</label>
+                                    <input type="text" class="form-control" id="alamat" placeholder="Masukkan alamat anda">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" placeholder="Masukkan username anda">
+                                <p style="color: #737373; font-size: small;">Silahkan masukan nama pengguna dengan 8-10 huruf dan karakter (a-z,A-Z,1-9,!@#$%*_)</p>
+                            </div>
+                            <div class="mb-3">
+                              <label for="password" class="form-label">Password</label>
+                              <input type="password" class="form-control" id="input-password" placeholder="Masukkan password anda">
+                            </div>
+                            <div id="button">
+                                <button onclick="sign_in()" type="submit" class="signin btn btn-primary">Login</button>
+                                <div class="text-center">
+                                    <span class="d-inline">Belum punya akun? <a onclick="toggle_signup()" class="daftar d-inline text-decoration-none">Daftar sekarang</a></span>
+                                </div>
+                            </div>
+                            <div id="re-pw" class="is-hidden">
+                                <div class="mb-3">
+                                    <label for="re-password" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="input-password2" placeholder="Konfirmasi password anda">
+                                </div>
+                                <button onclick="sign_up()" type="submit" class="signup btn btn-primary">Daftar</button>
+                                <button class="cancel btn btn-outline-dark" onclick="toggle_signup()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="login-right w-50" style="height:1000px;">
+        </div>
+    </section>
+</body>
+</html>

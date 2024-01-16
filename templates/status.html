@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- font poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <script src="/static/user.js"></script>
+
+    <style>
+      *{
+        font-family: 'Lobster', cursive;
+        font-family: 'Poppins', sans-serif;
+        padding: 0;
+        margin: 0;
+    }
+  
+    .cf{
+        display: flex;
+        min-height: 100vh;
+    }
+  
+    .sidebar{
+        background-color: #111827;
+        width: 260px;
+        padding: 24px;
+        display: flex;
+        box-sizing: border-box;
+        flex-direction: column;
+        transition: all ease-in .3s;
+    }
+  
+    .sidebar.hide{
+        width: 87px;
+        transition: all ease-out .3s;
+    }
+  
+    .main-content{
+        background-color: #EEEEEE;
+        flex-grow: 1;
+    }
+  
+    .sidebar .description-header{
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 16px;
+        text-align: center;
+        color: #FFFFFF;
+    }
+  
+    .sidebar.hide .description-header{
+        display: none;
+    }
+  
+    .sidebar a{
+        text-decoration: none;
+    }
+  
+    .sidebar .header .list-item{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 12px 10px;
+        border-radius: 8px;
+        height: 40px;
+        box-sizing: border-box;
+    }
+  
+    .sidebar .header .list-item span{
+        font-size: 24px;
+    }
+  
+    .sidebar .header .list-item .icon{
+        margin-right: 12px;
+    }
+  
+    .sidebar .header .illustration{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+        margin: 10px 0 22px 0;
+        box-sizing: border-box;
+    }
+  
+    .sidebar.hide .illustration{
+        display: none;
+    }
+  
+    .sidebar .main .list-item .description{
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+      text-align: center;
+      color: #FFFFFF;
+    }
+  
+    .sidebar.hide .main .list-item .description{
+        display: none;
+    }
+  
+    .sidebar .main .list-item .icon{
+        margin-right: 12px;
+        color: #EEEEEE;
+    }
+  
+    .sidebar .main .list-item{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 12px 10px;
+        border-radius: 8px;
+        /*width: 212px;*/
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        transition: all ease-in .2s;
+    }
+  
+    .sidebar .main .list-item:hover{
+        background: #ff8800;
+        transition: all ease-in .2s;
+    }
+  
+      /* toogle menu */
+  
+      #menu-button {
+        margin-top: 5px;
+        margin-left: 5px;
+        width: 32px;
+        position: absolute;
+        overflow: hidden;
+    }
+  
+    #menu-label {
+        position: relative;
+        display: block;
+        height: 20px;
+        cursor: pointer;
+    }
+  
+    #menu-checkbox {
+        display: none;
+    }
+  
+    #hamburger,
+    #menu-label:after,
+    #menu-label:before {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: #111827;
+    }
+  
+    #menu-label:after,
+    #menu-label:before {
+        content: "";
+        transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) left;
+    }
+  
+    #menu-label:before {
+        top: 0;
+    }
+  
+    #menu-label:after {
+        top: 8px;
+    }
+  
+    #hamburger {
+        top: 16px;
+    }
+  
+    #hamburger:before {
+        content: "MENU";
+        position: absolute;
+        top: 5px;
+        right: 0;
+        left: 0;
+        color: #111827;
+        font-size: 10px;
+        font-weight: bold;
+        text-align: center;
+    }
+  
+    #menu-checkbox:checked+#menu-label::before {
+        left: -39px;
+    }
+  
+    #menu-checkbox:checked+#menu-label::after {
+        left: 39px;
+    }
+  
+    #menu-checkbox:checked+#menu-label #hamburger::before {
+        animation: moveUpThenDown 0.8s ease 0.2s forwards,
+            shakeUp 0.8s ease 0.2s forwards,
+            shakeDown 0.2s ease 0.8s forwards
+    }
+  
+    
+  
+    @keyframes moveUpThenDown {
+        0% {
+            top: 0;
+        }
+  
+        50% {
+            top: -27px;
+        }
+  
+        100% {
+            top: -14px;
+        }
+    }
+  
+    @keyframes shakeUp {
+        0% {
+            transform: rotateZ(0);
+        }
+  
+        25% {
+            transform: rotateZ(-10deg);
+        }
+  
+        50% {
+            transform: rotateZ(0);
+        }
+  
+        75% {
+            transform: rotateZ(10deg);
+        }
+  
+        100% {
+            transform: rotateZ(0);
+        }
+    }
+  
+    @keyframes shakeDown {
+        0% {
+            transform: rotateZ(0);
+        }
+  
+        80% {
+            transform: rotateZ(3deg);
+        }
+  
+        90% {
+            transform: rotateZ(-3deg);
+        }
+  
+        100% {
+            transform: rotateZ(0);
+        }
+    }
+  
+  .content-profil{
+      justify-content: end;
+      align-content: flex-end;
+      margin-right: 20px;
+      margin-top: 5px;
+  }
+
+      th, td{
+        text-align: center;
+      }
+    </style>
+    <script src="/static/user.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <title>Cek Status</title>
+</head>
+<body>
+  {% if status %}
+  <div class="container-fluid cf">
+    <div class="sidebar">
+        <div class="header">
+            <div class="list-item">
+                <a href="">
+                    <span class="description-header">Halaman Cek Status</span>
+                </a>
+            </div>
+            <div class="illustration">
+                <img src="" alt="">
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="list-item">
+                <a href="/user">
+                    <img src="/static/house (1).png  " alt="" class="icon">
+                    <span class="description">Home</span>
+                </a>
+            </div>
+            <div class="list-item">
+                <a href="/pelayanan/domisili">
+                    <img src="/static/file.png" alt="" class="icon">
+                    <span class="description">Pelayanan</span>
+                </a>
+                
+            </div>
+            <div class="list-item">
+                <a href="/homepage_user/pengaduan">
+                    <img src="/static/folder.png" alt="" class="icon">
+                    <span class="description">Pengaduan</span>
+                </a>
+            </div>
+            <div class="list-item">
+                <a href="/user">
+                    <img src="/static/logout.png" alt="" class="icon">
+                    <span class="description">Kembali</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+      <div id="menu-button">
+          <input type="checkbox" id="menu-checkbox">
+          <label for="menu-checkbox" id="menu-label">
+              <div id="hamburger">
+              </div>
+          </label>
+      </div>
+      <div class="content-profil d-flex">
+          <div class="dropdown">
+              <a href="#"
+                  class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <strong style="font-size: 20px;">@{{ name_info.name }}</strong>
+                  <img src="{{ url_for('static', filename=name_info.profile_pic_real) }}" alt="" width="50"
+                      height="50" class="rounded-circle me-2">
+              </a>
+              <ul class="dropdown-menu text-small shadow">
+                  <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                          data-bs-target="#staticBackdrop">Edit Profile</a></li>
+                  <li>
+                      <hr class="dropdown-divider">
+                  </li>
+                  <li><a class="dropdown-item" href="" onclick="sign_out()">Sign out</a></li>
+              </ul>
+          </div>
+      </div>
+
+      <div class="content mx-3 mt-3">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Surat Domisili</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Surat Kelahiran</button>
+            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Surat Kematian</button>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Nama Pemohon</th>
+                  <th scope="col">TTL</th>
+                  <th scope="col">Jenis Kelamin</th>
+                  <th scope="col">Pekerjaan</th>
+                  <th scope="col">Alamat Domisili</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">File Surat</th>
+                  <th scope="col">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for domisili in status_domisili %}
+                <tr>
+                  <td>{{ domisili.nama }}</td>
+                  <td>{{ domisili.ttl }}</td>
+                  <td>{{ domisili.jk }}</td>
+                  <td>{{ domisili.work }}</td>
+                  <td>{{ domisili.alamat }}</td>
+                  <td>{{ domisili.status }}</td>
+                  <td><a style="color:rgb(21, 24, 189);" class="nav-link" href="/download_surat/{{ domisili.surat }}">unduh surat</a></td>
+                  <td><a onclick="hapus('{{ domisili._id }}')"class="btn btn-danger">Batal</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+            <table class="table ">
+              <thead>
+                <tr>
+                  <th scope="col">Nama bayi</th>
+                  <th scope="col">Tempat Lahir</th>
+                  <th scope="col">Tanggal Lahir</th>
+                  <th scope="col">Jenis Kelamin</th>
+                  <th scope="col">Anak Ke-</th>
+                  <th scope="col">Nama Orang Tua</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">File Surat</th>
+                  <th scope="col">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for birth in status_kelahiran %}
+                <tr>
+                  <td>{{ birth.nama_bayi }}</td>
+                  <td>{{ birth.tempat_lahir }}</td>
+                  <td>{{ birth.tanggal_lahir }}</td>
+                  <td>{{ birth.jk }}</td>
+                  <td>{{ birth.anak }}</td>
+                  <td>{{ birth.ayah }} & {{ birth.ibu }}</td>
+                  <td>{{ birth.status }}</td>
+                  <td><a style="color:rgb(21, 24, 189);" class="nav-link" href="/download_surat/{{ birth.surat }}">unduh surat</a></td>
+                  <td><a onclick="batal('{{ birth._id }}')"class="btn btn-danger">Batal</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+            <table class="table ">
+              <thead>
+                <tr>
+                  <th scope="col">Nama</th>
+                  <th scope="col">TTL</th>
+                  <th scope="col">Agama</th>
+                  <th scope="col">Jenis Kelamin</th>
+                  <th scope="col">Tanggal Meninggal</th>
+                  <th scope="col">Tempat Meninggal</th>
+                  <th scope="col">Penyebab</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">File Surat</th>
+                  <th scope="col">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for kematian in status_kematian %}
+                <tr>
+                  <td>{{ kematian.nama }}</td>
+                  <td>{{ kematian.ttl }}</td>
+                  <td>{{ kematian.agama }}</td>
+                  <td>{{ kematian.jk }}</td>
+                  <td>{{ kematian.tanggal }}</td>
+                  <td>{{ kematian.tempat }}</td>
+                  <td>{{ kematian.penyebab }}</td>
+                  <td>{{ kematian.status }}</td>
+                  <td><a style="color:rgb(21, 24, 189);" class="nav-link" href="/download_surat/{{ kematian.surat }}">unduh surat</a></td>
+                  <td><a onclick="cancel('{{ kematian._id }}')"class="btn btn-danger">Batal</a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+          </div>
+  </div>
+  </div>
+  </div>
+  <!-- class modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Profile</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="pic" class="form-label">Ubah Foto Profil</label>
+            <input type="file" class="form-control" id="picture">
+          </div>
+          <div class="mb-3">
+            <label for="name" class="form-label">Ubah Nama Lengkap</label>
+            <input type="text" class="form-control" id="username_update" placeholder="Nama anda">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button onclick="update_profile()" type="button" class="btn btn-dark">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    {% endif %}
+    <script src="/static/sidebar.js"></script>
+    </body>
+</html>

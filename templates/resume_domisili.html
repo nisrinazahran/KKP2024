@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surat Domisili</title>
+
+    <style>
+        body {
+        margin: 0;
+        padding: 0;
+        background-color: #FAFAFA;
+        font: 12pt "Tahoma";
+        }
+
+        * {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        }
+
+        .page {
+        width: 21cm;
+        min-height: 29.7cm;
+        padding: 2cm;
+        margin: 1cm auto;
+        border: 1px #D3D3D3 solid;
+        background: white;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+
+        @page {
+        size: A4;
+        margin: 0;
+        }
+
+        @media print {
+        .page {
+            margin: 0;
+            border: initial;
+            border-radius: initial;
+            width: initial;
+            min-height: initial;
+            box-shadow: initial;
+            background: initial;
+            page-break-after: always;
+        }
+        }
+
+        .header{
+            border-bottom: 3px solid black;
+            padding: 2px;
+        }
+        .center{
+            text-align : center!important ;
+            line-height: 5px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="book">
+        <div class="page">
+            <table class="header" width="100%">
+                <tr>
+                    <td class="center">
+                        <h2>SURAT KETERANGAN DOMISILI</h2>
+                    </td>
+                </tr>
+            </table>
+            <table width="100%">
+                    <tr>
+                        <td><p>Yang bertanda tangan dibawah ini Kepala Desa Kami dengan ini menyatakan, bahwa:</p></td>
+                    </tr>
+            </table>
+            <table style="margin-left: 50px;">
+                    <tr>
+                        <td><p>Nama</p></td>
+                        <td><p>:</p></td>
+                        <td><p>{{ data.nama }}</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Tempat, Tanggal Lahir</p></td>
+                        <td><p>:</p></td>
+                        <td><p>{{ data.ttl }}</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Jenis Kelamin</p></td>
+                        <td><p>:</p></td>
+                        <td><p>{{ data.jk }}</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Alamat</p></td>
+                        <td><p>:</p></td>
+                        <td><p>{{ data.alamat}}</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Pekerjaan</p></td>
+                        <td><p>:</p></td>
+                        <td><p>{{ data.work }}</p></td>
+                    </tr>
+            </table>
+            <table>
+                    <tr>
+                        <td><p>
+                           Orang tersebut diatas adalah benar warga kami dan berdomisili di {{ data.alamat }}. <br>
+                           Demikian surat keterangan ini dibuat untuk dipergunakan sebagaimana mestinya.
+                        </p></td>
+                    </tr>
+            </table>
+            <table width="100%">
+                <tr style="text-align: right;">
+                    <td><p>KEPALA DESA KAMI<br><img src="https://media.discordapp.net/attachments/1076077418537832458/1120282726084378644/cap.png?width=200&height=200" width="200" height="200"><br>Muhammad Sholihin</p></td>
+                </tr>
+                <tr style="text-align: right;">
+                <td></td>     
+                </tr>
+            </table>
+        </div>
+      </div>
+</body>
+</html>

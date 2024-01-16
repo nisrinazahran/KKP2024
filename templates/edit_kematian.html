@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validasi Surat Kelahiran</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap&family=Merriweather" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <style>
+        .container{
+            margin-top: 40px;
+            width: 500px;
+            height: 350px;
+            box-shadow: 14px 6px 10px -3px rgba(0,0,0,0.1);
+            background-color:  #111827;
+            border-radius: 10px;
+            padding-top: 7px;
+        }
+
+        body{
+            background-color: rgb(169, 169, 218);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark" style="background-color: #111827; color:#EEEEEE">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="/static/admin.png" width="50" height="50">
+                <strong>Hello, Admin!</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="d-flex btn-nav" style="margin: 10px;">
+                <a class="btn btn-outline-warning active home-btn" >Home</a>
+                <a onclick="sign_out()" class="btn btn-outline-warning logout" >Log Out</a>
+            </div>
+          </div>
+        </div>
+    </nav>
+    <main>
+        <header class="text-center" style="margin-top: 100px; font-size: 30px;"><strong>VALIDASI PERMOHONAN SURAT</strong></header>
+        <div class="container">
+            <div class="row justify-content-center text-white my-2 mx-2 ">
+                <div class="mb-3 text-center" style="padding: 5px;">
+                    <h4>Silahkan unduh surat</h4>
+                    <form action="/convert_to_pdf/kematian" method="post">
+                        <input type="hidden" name="nama" value="{{data.nama}}">
+                        <input type="hidden" name="ttl" value="{{data.ttl}}">
+                        <input type="hidden" name="agama" value="{{data.agama}}">
+                        <input type="hidden" name="jk" value="{{data.jk}}">
+                        <input type="hidden" name="tempat" value="{{data.tempat}}">
+                        <input type="hidden" name="tanggal" value="{{data.tanggal}}">
+                        <input type="hidden" name="penyebab" value="{{data.penyebab}}">
+                        <button type="submit" class="btn btn-outline-warning">Download PDF</button>
+                    </form>
+                </div>
+                <div class="mb-3">
+                    <form action="/edit/kematian" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="{{data['_id']}}">
+                        <div style="margin: 5px;">
+                            <label for="">Status Validasi</label>
+                            <select name="status" class="form-select" aria-label="status">
+                                <option selected>--Pilih status--</option>
+                                <option value="Tidak tervalidasi">Tidak tervalidasi</option>
+                                <option value="Validasi">Validasi</option>
+                            </select>
+                        </div>
+                        <div style="margin: 5px;">
+                            <label for="">Upload PDF</label>
+                            <input type="file" class="form-control" name="pdf" />
+                        </div>
+                        <button type="submit" class="btn btn-warning" style="margin: 5px;">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+`   </main>
+</body>
+</html>

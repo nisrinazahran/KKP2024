@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surat Kematian</title>
+    <!-- Link bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Bree+Serif&family=Poppins:wght@700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- font poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Link jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/static/user.js"></script>
+    <style>
+        * {
+            font-family: 'Lobster', cursive;
+            font-family: 'Poppins', sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container-fluid {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            background-color: #111827;
+            width: 260px;
+            padding: 24px;
+            display: flex;
+            box-sizing: border-box;
+            flex-direction: column;
+            transition: all ease-in .3s;
+        }
+
+        .sidebar.hide {
+            width: 87px;
+            transition: all ease-out .3s;
+        }
+
+        .main-content {
+            background-color: #EEEEEE;
+            flex-grow: 1;
+        }
+
+        .sidebar .description-header {
+            font-style: normal;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 16px;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        .sidebar.hide .description-header {
+            display: none;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+        }
+
+        .sidebar .header .list-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 12px 10px;
+            border-radius: 8px;
+            height: 40px;
+            box-sizing: border-box;
+        }
+
+        .sidebar .header .list-item span {
+            font-size: 24px;
+        }
+
+        .sidebar .header .list-item .icon {
+            margin-right: 12px;
+        }
+
+        .sidebar .header .illustration {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
+            margin: 10px 0 22px 0;
+            box-sizing: border-box;
+        }
+
+        .sidebar.hide .illustration {
+            display: none;
+        }
+
+        .sidebar .main .list-item .description {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 16px;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        .sidebar.hide .main .list-item .description {
+            display: none;
+        }
+
+        .sidebar .main .list-item .icon {
+            margin-right: 12px;
+            color: #EEEEEE;
+        }
+
+        .sidebar .main .list-item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 12px 10px;
+            border-radius: 8px;
+            /*width: 212px;*/
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            transition: all ease-in .2s;
+        }
+
+        .sidebar .main .list-item:hover {
+            background: #ff8800;
+            transition: all ease-in .2s;
+        }
+
+        /* toogle menu */
+
+        #menu-button {
+            margin-left: 10px;
+            margin-top: 20px;
+            width: 32px;
+            position: absolute;
+            overflow: hidden;
+        }
+
+        #menu-label {
+            position: relative;
+            display: block;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        #menu-checkbox {
+            display: none;
+        }
+
+        #hamburger,
+        #menu-label:after,
+        #menu-label:before {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #111827;
+        }
+
+        #menu-label:after,
+        #menu-label:before {
+            content: "";
+            transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) left;
+        }
+
+        #menu-label:before {
+            top: 0;
+        }
+
+        #menu-label:after {
+            top: 8px;
+        }
+
+        #hamburger {
+            top: 16px;
+        }
+
+        #hamburger:before {
+            content: "MENU";
+            position: absolute;
+            top: 5px;
+            right: 0;
+            left: 0;
+            color: #111827;
+            font-size: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #menu-checkbox:checked+#menu-label::before {
+            left: -39px;
+        }
+
+        #menu-checkbox:checked+#menu-label::after {
+            left: 39px;
+        }
+
+        #menu-checkbox:checked+#menu-label #hamburger::before {
+            animation: moveUpThenDown 0.8s ease 0.2s forwards,
+                shakeUp 0.8s ease 0.2s forwards,
+                shakeDown 0.2s ease 0.8s forwards
+        }
+
+        @keyframes moveUpThenDown {
+            0% {
+                top: 0;
+            }
+
+            50% {
+                top: -27px;
+            }
+
+            100% {
+                top: -14px;
+            }
+        }
+
+        @keyframes shakeUp {
+            0% {
+                transform: rotateZ(0);
+            }
+
+            25% {
+                transform: rotateZ(-10deg);
+            }
+
+            50% {
+                transform: rotateZ(0);
+            }
+
+            75% {
+                transform: rotateZ(10deg);
+            }
+
+            100% {
+                transform: rotateZ(0);
+            }
+        }
+
+        @keyframes shakeDown {
+            0% {
+                transform: rotateZ(0);
+            }
+
+            80% {
+                transform: rotateZ(3deg);
+            }
+
+            90% {
+                transform: rotateZ(-3deg);
+            }
+
+            100% {
+                transform: rotateZ(0);
+            }
+        }
+
+
+        /* content style */
+
+        .content-header {
+            padding: 30px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .content-header h1 {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 35px;
+            line-height: 30px;
+            color: #000000;
+            margin-bottom: 10px;
+        }
+
+        .content-profil {
+            justify-content: end;
+            align-content: flex-end;
+            margin-right: 20px;
+            margin-top: 5px;
+        }
+
+        .content-profil strong {
+            font-size: 16px;
+            font-weight: 500;
+            font-style: normal;
+            line-height: 24px;
+            color: #000000;
+            margin-right: 10px;
+        }
+
+        .content-body {
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 400;
+            font-style: normal;
+            line-height: 21px;
+            color: #000000;
+        }
+
+        .content-form label {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 21px;
+            color: #000000;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .content-form input {
+            background: #ffffff;
+            border: 1px solid #BCBCBC;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+
+        .form-check label {
+            font-size: 16px;
+            font-weight: 400;
+            font-style: normal;
+            line-height: 21px;
+        }
+
+        .content-form button {
+            text-align: center;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            color: #FFFFFF;
+            background-color: #111827;
+            border-radius: 8px;
+            width: 170px;
+            height: 40px;
+            margin-left: 150px;
+            margin-top: 10px;
+            margin-bottom: 30px;
+        }
+
+        .content-form button:hover {
+            background-color: #ff8800;
+            color: #FFFFFF;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="sidebar">
+            <div class="header">
+                <div class="list-item">
+                    <a href="">
+                        <span class="description-header">Layanan Desa</span>
+                    </a>
+                </div>
+                <div class="illustration">
+                    <img src="" alt="">
+                </div>
+            </div>
+
+            <div class="main">
+                <div class="list-item">
+                    <a href="/pelayanan/kelahiran">
+                        <img src="/static/folders.png" alt="" class="icon">
+                        <span class="description">Surat Kelahiran</span>
+                    </a>
+                </div>
+                <div class="list-item">
+                    <a href="/pelayanan/kematian">
+                        <img src="/static/file.png" alt="" class="icon">
+                        <span class="description nav-active">Surat Kematian</span>
+                    </a>
+                </div>
+                <div class="list-item">
+                    <a href="/pelayanan/domisili">
+                        <img src="/static/folder.png" alt="" class="icon">
+                        <span class="description">Surat Domisili</span>
+                    </a>
+                </div>
+                <div class="list-item">
+                    <a href="/user">
+                        <img src="/static/logout.png" alt="" class="icon">
+                        <span class="description">Kembali</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div id="menu-button">
+                <input type="checkbox" id="menu-checkbox">
+                <label for="menu-checkbox" id="menu-label">
+                    <div id="hamburger">
+                    </div>
+                </label>
+            </div>
+            <div class="content-profil d-flex">
+                <div class="dropdown">
+                    <a href="#"
+                        class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <strong style="font-size: 20px;">@{{ name_info.name }}</strong>
+                        <img src="{{ url_for('static', filename=name_info.profile_pic_real) }}" alt="" width="50"
+                            height="50" class="rounded-circle me-2">
+                    </a>
+                    <ul class="dropdown-menu text-small shadow">
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop">Edit Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" onclick="sign_out()" href="">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="content">
+                <div class="content-header d-flex">
+                    <h1>Surat Kematian</h1>
+                </div>
+                <div class="content-body d-flex">
+                    <div class="content-form">
+                        <form action="/pelayanan/kematian" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="username" value="{{ name_info.name }}">
+                            <div class="mb-3">
+                                <label for="nama" class="form-label">Nama Lengkap</label>
+                                <input type="nama" class="form-control" id="nama" placeholder="Masukkan Nama Lengkap" name="nama" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tempat-tanggal-lahir" class="form-label">Tempat, Tanggal Lahir</label>
+                                <input type="tempat-tanggal-lahir" class="form-control" id="ttl"
+                                    placeholder="Masukkan tempat dan tanggal lahir" name="ttl">
+                            </div>
+                            <div class="mb-3">
+                                <label for="agama" class="form-label">Agama</label>
+                                <input type="agama" class="form-control" id="agama" placeholder="Masukkan Agama" name="agama" required>
+                            </div>
+                            <div class="mb-3 alignt">
+                                <label for="jenis-kelamin" class="form-label">Jenis kelamin</label>
+                                <select id="jenis_kelamin" name="jenis-kelamin" required>
+                                    <option value="laki-laki">Laki-laki</option>
+                                    <option value="perempuan">Perempuan</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tempat" class="form-label">Tempat Meninggal</label>
+                                <input type="tempat" class="form-control" id="tempat"
+                                    placeholder="Masukkan Tempat Kematian" name="tempat" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="tanggal" class="form-label">Tanggal Meninggal</label>
+                                <input type="tanggal" class="form-control" id="tanggal"
+                                    placeholder="Masukkan Tanggal Kematian" name="tanggal" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="penyebab" class="form-label">Penyebab Meninggal</label>
+                                <input type="penyebab" class="form-control" id="penyebab"
+                                    placeholder="Masukkan Penyebab Kematian" name="penyebab" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="input-file" class="form-label">Upload file persyaratan</label>
+                                <input type="file" class="form-control" id="input-file" name="pdf">
+                            </div>
+                            <button onclick="sent()" type="submit" class="btn">Simpan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- class modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Profile</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="pic" class="form-label">Ubah Foto Profil</label>
+                <input type="file" class="form-control" id="picture">
+              </div>
+              <div class="mb-3">
+                <label for="name" class="form-label">Ubah Nama Lengkap</label>
+                <input type="text" class="form-control" id="username_update" placeholder="Nama anda">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button onclick="update_profile()" type="button" class="btn btn-dark">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+    <script src="/static/sidebar.js"></script>
+    <script>
+        function sent(){
+        swal("Success","Surat berhasil dibuat!","success")
+    }
+    </script>
+</body>
+
+</html>
